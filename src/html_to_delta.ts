@@ -59,8 +59,10 @@ export class HtmlToDelta {
   convert(htmlText: string): Delta {
     const delta = new Delta();
     const document = parse(htmlText);
-    const nodesToProcess = document.childNodes;
-
+    const nodesToProcess =
+      document.querySelector('body')?.childNodes ||
+      document.querySelector('html')?.childNodes ||
+      document.childNodes;
     for (let index: number = 0; index < nodesToProcess.length; index++) {
       const node = nodesToProcess.at(index);
 
