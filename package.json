@@ -1,0 +1,35 @@
+{
+  "name": "quill-delta-from-html",
+  "version": "1.0.0",
+  "description": "Convert easily HTML inputs content to Quill Js Delta format",
+  "scripts": {
+    "build": "tsc",
+    "start": "ts-node src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CatHood0/quill-delta-from-html.git"
+  },
+  "keywords": [
+    "parser",
+    "html",
+    "delta",
+    "quill",
+    "html-to-delta"
+  ],
+  "author": "CatHood0",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CatHood0/quill-delta-from-html/issues"
+  },
+  "homepage": "https://github.com/CatHood0/quill-delta-from-html#readme",
+  "dependencies": {
+    "quill-delta": "^5.1.0"
+  },
+  "devDependencies": {
+    "node-html-parser": "^6.1.13",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.3"
+  }
+}
