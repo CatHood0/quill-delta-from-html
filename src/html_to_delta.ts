@@ -104,8 +104,12 @@ export class HtmlToDelta {
       }
     }
 
-    delta.insert('\n');
-
+    const operation: Op = delta.ops.at(delta.ops.length - 1) as Op;
+    const hasAttributes = operation.attributes !== null && operation.attributes !== undefined;
+    const lastData = operation.insert || '';
+    if (lastData?.toString().match('\n') === null || hasAttributes) {
+      delta.insert('\n');
+    }
     return delta;
   }
 }
