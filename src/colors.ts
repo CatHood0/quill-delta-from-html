@@ -41,7 +41,7 @@ export function colorToHex(color: string) {
 ///
 /// Returns:
 /// The converted color string in hexadecimal format.
-function rgbToHex(rgb: string) {
+export function rgbToHex(rgb: string) {
   rgb = rgb.replace('rgb(', '').replace(')', '');
   const rgbValues = rgb.split(',');
   const r = parseInt(rgbValues[0].trim(), 10);
@@ -59,7 +59,7 @@ function rgbToHex(rgb: string) {
 ///
 /// Returns:
 /// The converted color string in hexadecimal format.
-function rgbaToHex(rgba: string) {
+export function rgbaToHex(rgba: string) {
   rgba = rgba.replace('rgba(', '').replace(')', '');
   const rgbaValues = rgba.split(',');
   const r = parseInt(rgbaValues[0].trim(), 10);
@@ -79,7 +79,7 @@ function rgbaToHex(rgba: string) {
 ///
 /// Returns:
 /// The converted color string in hexadecimal format.
-function hslToHex(hsl: string) {
+export function hslToHex(hsl: string) {
   hsl = hsl.replace('hsl(', '').replace(')', '');
   const hslValues = hsl.split(',');
   const h = parseFloat(hslValues[0].trim());
@@ -98,7 +98,7 @@ function hslToHex(hsl: string) {
 ///
 /// Returns:
 /// The converted color string in hexadecimal format.
-function hslaToHex(hsla: string) {
+export function hslaToHex(hsla: string) {
   hsla = hsla.replace('hsla(', '').replace(')', '');
   const hslaValues = hsla.split(',');
   const h = parseFloat(hslaValues[0].trim());
@@ -121,7 +121,7 @@ function hslaToHex(hsla: string) {
 ///
 /// Returns:
 /// A list of integers representing the RGB values ([red, green, blue]).
-function hslToRgb(h: number, s: number, l: number) {
+export function hslToRgb(h: number, s: number, l: number) {
   const c = (1 - Math.abs(2 * l - 1)) * s;
   const x = c * (1 - Math.abs(((h / 60) % 2) - 1));
   const m = l - c / 2;
@@ -168,7 +168,7 @@ function hslToRgb(h: number, s: number, l: number) {
 ///
 /// Returns:
 /// The converted color string in hexadecimal format.
-function toHex(r: number, g: number, b: number, a = 255) {
+export function toHex(r: number, g: number, b: number, a = 255) {
   const hexR = r.toString(16).padStart(2, '0');
   const hexG = g.toString(16).padStart(2, '0');
   const hexB = b.toString(16).padStart(2, '0');
