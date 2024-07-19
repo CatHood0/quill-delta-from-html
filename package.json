@@ -25,10 +25,10 @@
   },
   "homepage": "https://github.com/CatHood0/quill-delta-from-html#readme",
   "dependencies": {
-    "quill-delta": "^5.1.0"
+    "quill-delta": "^5.1.0",
+    "node-html-parser": "^6.1.13"
   },
   "devDependencies": {
-    "node-html-parser": "^6.1.13",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.3"
   }
