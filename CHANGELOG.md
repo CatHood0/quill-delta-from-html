@@ -1,3 +1,8 @@
+## 1.0.3
+
+* Fix: `quill-delta-from-html` cannot founded
+* Chore: exposing all named methods on `quill-delta-from-html`
+
 ## 1.0.2
 
 * Fix: always add a new line without checking the last operation
