@@ -69,14 +69,14 @@ export class HtmlToDelta {
       if (node instanceof HTMLElement) {
         //first just verify if the customBlocks aren't empty and then store on them to
         //validate if one of them make match with the current Node
-        if (this.customBlocks!.length > 0) {
-          let continueLoop: Boolean = false;
+        if (this.customBlocks.length > 0) {
+          let continueLoop: boolean = false;
           for (
             let index: number = 0;
             index < this.customBlocks.length;
             index++
           ) {
-            const customPart = this.customBlocks.at(index) as CustomHtmlPart;
+            const customPart = this.customBlocks[index];
 
             if (customPart.matches(node)) {
               const ops = customPart.convert(node);
@@ -96,7 +96,7 @@ export class HtmlToDelta {
         }
         const operations: Op[] = this.htmlToOp.resolveCurrentElement(node, 0);
         operations.forEach((op) => {
-          delta.insert(op.insert!, op.attributes);
+          delta.push(op);
         });
       }
       if (node instanceof TextNode) {
@@ -104,10 +104,11 @@ export class HtmlToDelta {
       }
     }
 
-    const operation: Op = delta.ops.at(delta.ops.length - 1) as Op;
+    const operation: Op = delta.ops[delta.ops.length - 1];
     const hasAttributes = operation.attributes !== null && operation.attributes !== undefined;
-    const lastData = operation.insert || '';
-    if (lastData?.toString().match('\n') === null || hasAttributes) {
+    const lastData = operation.insert;
+
+    if (typeof lastData !== 'string' || !lastData.endsWith('\n') || hasAttributes) {
       delta.insert('\n');
     }
     return delta;
