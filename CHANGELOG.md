@@ -1,3 +1,7 @@
+## 1.0.4
+
+* Correctly add last new line in #3
+
 ## 1.0.3
 
 * Fix: `quill-delta-from-html` cannot founded
