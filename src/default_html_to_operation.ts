@@ -202,16 +202,18 @@ export class DefaultHtmlToOperations extends HtmlOperations {
 
     const nodes = element.childNodes;
     nodes.forEach((node) => {
-      processNode(node, attributes, delta, false, this.customBlocks);
+      processNode(node, attributes, delta, true, this.customBlocks, ['size']);
     });
 
     // Ensure a newline is added at the end of the header with the correct attributes
     if (Object.keys(blockAttributes).length > 0) {
+      let copyAttributes: AttributeMap = {};
       for (const key in blockAttributes) {
-        if (blockAttributes[key] === null) {
-          delete blockAttributes[key];
+        if (blockAttributes[key] !== null) {
+          copyAttributes[key] = blockAttributes[key];
         }
       }
+      blockAttributes = copyAttributes;
       delta.insert('\n', blockAttributes);
     }
 

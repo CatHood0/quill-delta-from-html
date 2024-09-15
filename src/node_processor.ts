@@ -34,6 +34,7 @@ export function processNode(
   delta: Delta,
   addSpanAttrs: Boolean = false,
   customBlocks: CustomHtmlPart[] = [],
+  removeTheseAttributesFromSpan: string[] = [],
 ): void {
   if (node instanceof TextNode) {
     const validAttributes: AttributeMap = {};
@@ -84,13 +85,30 @@ export function processNode(
     // Use custom block definitions if provided
     // Handle <span> tags
     if (isSpan(node)) {
-      const spanAttributes = parseStyleAttribute(
+      let spanAttributes = parseStyleAttribute(
         node.getAttribute('style') || '',
       );
       if (addSpanAttrs) {
-        delete newAttributes['align'];
-        delete newAttributes['direction'];
-        delete newAttributes['indent'];
+        let newCopyAttr: AttributeMap = {};
+        for(const key in newAttributes){
+          if(key === 'align' || key === 'direction' || key === 'indent'){
+            continue;
+          }
+          if(newAttributes[key] !== null && newAttributes[key] !== undefined && removeTheseAttributesFromSpan.indexOf(key) <= -1){
+            newCopyAttr[key] = newAttributes[key]; 
+          }         
+        }
+        if(removeTheseAttributesFromSpan) {
+          let copyAttributes: AttributeMap = {};
+          for(const key in spanAttributes){
+            if(spanAttributes[key] !== null && spanAttributes[key] !== undefined && removeTheseAttributesFromSpan.indexOf(key) <= -1){
+              copyAttributes[key] = spanAttributes[key]; 
+            } else if(key === 'align' || key === 'direction' || key === 'indent'){
+              continue;
+            }
+          }
+          spanAttributes = copyAttributes;
+        }
         Object.assign(newAttributes, spanAttributes);
       }
     }

@@ -33,13 +33,13 @@ export function parseStyleAttribute(style: string): AttributeMap {
           break;
         case 'color':
           const color: string | null = validateAndGetColor(value);
-          if(color != null){
+          if(color !== null){
             attributes['color'] = color;
           }
           break;
         case 'background-color':
           const bgColor: string | null = validateAndGetColor(value);
-          if(bgColor != null){
+          if(bgColor !== null){
             attributes['background'] = bgColor;
           }
           break;
@@ -63,7 +63,7 @@ export function parseStyleAttribute(style: string): AttributeMap {
           } else {
             try {
               const size: number | null = parseToPx(value);
-              if(size == null) break;
+              if(size === null) break;
               if (size <= 10) {
                 sizeToPass = 'small';
               } else {
