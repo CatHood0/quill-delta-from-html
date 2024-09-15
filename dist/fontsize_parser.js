@@ -68,6 +68,6 @@ function parseToPx(value, fontSizeEmMultiplier = 16.0, rootFontSizeRemMultiplier
         case 'rem':
             return number * rootFontSizeRemMultiplier;
         default:
-            throw new Error(`Unit not supported: ${unit}`);
+            return null;
     }
 }

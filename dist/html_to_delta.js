@@ -11,11 +11,12 @@ const default_html_to_operation_1 = require("./default_html_to_operation");
  * Default converter for html to Delta
  **/
 class HtmlToDelta {
-    constructor(customBlocks, htmlToOperation) {
+    constructor(customBlocks, htmlToOperation, blackNodesList = []) {
         this.customBlocks = customBlocks || [];
         this.htmlToOp = htmlToOperation || new default_html_to_operation_1.DefaultHtmlToOperations();
         //automatically set custom block
         this.htmlToOp.setCustomBlocks(this.customBlocks);
+        this.blackNodesList = blackNodesList;
     }
     /**
      * Converts an HTML string into Delta operations.
@@ -61,6 +62,10 @@ class HtmlToDelta {
                     if (continueLoop) {
                         continue;
                     }
+                }
+                if (this.blackNodesList.indexOf(node.localName) >= 0) {
+                    delta.push({ insert: node.text });
+                    continue;
                 }
                 const operations = this.htmlToOp.resolveCurrentElement(node, 0);
                 operations.forEach((op) => {

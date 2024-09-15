@@ -57,11 +57,15 @@ function parseStyleAttribute(style) {
                     break;
                 case 'color':
                     const color = (0, colors_1.validateAndGetColor)(value);
-                    attributes['color'] = color;
+                    if (color !== null) {
+                        attributes['color'] = color;
+                    }
                     break;
                 case 'background-color':
                     const bgColor = (0, colors_1.validateAndGetColor)(value);
-                    attributes['background'] = bgColor;
+                    if (bgColor !== null) {
+                        attributes['background'] = bgColor;
+                    }
                     break;
                 case 'padding-left':
                 case 'padding-right':
@@ -85,6 +89,8 @@ function parseStyleAttribute(style) {
                     else {
                         try {
                             const size = (0, fontsize_parser_1.parseToPx)(value);
+                            if (size === null)
+                                break;
                             if (size <= 10) {
                                 sizeToPass = 'small';
                             }

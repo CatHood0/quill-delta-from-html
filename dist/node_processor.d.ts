@@ -12,4 +12,4 @@ import { CustomHtmlPart } from './custom_html_part';
  * @param {Delta} delta - The Delta object to push operations into.
  * @param {boolean} [addSpanAttrs=false] - Whether to add attributes from <span> tags.
  */
-export declare function processNode(node: Node, attributes: AttributeMap, delta: Delta, addSpanAttrs?: Boolean, customBlocks?: CustomHtmlPart[]): void;
+export declare function processNode(node: Node, attributes: AttributeMap, delta: Delta, addSpanAttrs?: Boolean, customBlocks?: CustomHtmlPart[], removeTheseAttributesFromSpan?: string[]): void;

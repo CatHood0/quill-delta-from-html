@@ -35,4 +35,4 @@ export declare const picasSizeMultiplier: number;
  * @param {number} [rootFontSizeRemMultiplier=16.0] - The font-size of the root element, used for `rem` units.
  * @returns {number} The equivalent value in pixels.
  */
-export declare function parseToPx(value: string, fontSizeEmMultiplier?: number, rootFontSizeRemMultiplier?: number): number;
+export declare function parseToPx(value: string, fontSizeEmMultiplier?: number, rootFontSizeRemMultiplier?: number): number | null;

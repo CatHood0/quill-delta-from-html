@@ -42,7 +42,7 @@ function colorToHex(color) {
         return hslaToHex(color);
     }
     else {
-        throw new Error(`color format not supported: ${color}`);
+        return null;
     }
 }
 /// Parses an RGB color string to a valid hexadecimal color string.

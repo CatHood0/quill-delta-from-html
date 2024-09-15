@@ -9,6 +9,22 @@ export declare class HtmlToDelta {
      * Converts HTML tags to Delta operations based on defined rules.
      **/
     private htmlToOp;
+    /** This is a list that must contains only the tag name
+     * of the all HTML Nodes (something like: [`p`, `div`, `h1`]) that will be
+     * inserted as plain text
+     *
+     * # Example
+     * Assume that you want to ignore just HTML containers. Then just need
+     * to do something like this:
+     *
+     * ```typescript
+     * let containerBlackList: string[] = ['div', 'section', 'article'];
+     *
+     * let converter: HtmlToDelta = new HtmlToDelta(null, null, containerBlackList);
+     * let delta = converter.convert(<your_html>);
+     * ```
+     **/
+    private blackNodesList;
     /**
      * List of custom HTML parts to handle non-common HTML tags.
      *
@@ -27,9 +43,9 @@ export declare class HtmlToDelta {
      *     })
      *   ]);
      * ```
-     */
+     **/
     private customBlocks;
-    constructor(customBlocks?: CustomHtmlPart[], htmlToOperation?: HtmlOperations);
+    constructor(customBlocks?: CustomHtmlPart[] | null, htmlToOperation?: HtmlOperations | null, blackNodesList?: string[]);
     /**
      * Converts an HTML string into Delta operations.
      *

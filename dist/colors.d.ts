@@ -1,5 +1,5 @@
-export declare function validateAndGetColor(colorString: string): string;
-export declare function colorToHex(color: string): string;
+export declare function validateAndGetColor(colorString: string): string | null;
+export declare function colorToHex(color: string): string | null;
 export declare function rgbToHex(rgb: string): string;
 export declare function rgbaToHex(rgba: string): string;
 export declare function hslToHex(hsl: string): string;

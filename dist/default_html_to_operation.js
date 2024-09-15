@@ -67,11 +67,13 @@ class DefaultHtmlToOperations extends html_to_operation_1.HtmlOperations {
             (0, node_processor_1.processNode)(node, inlineAttributes, delta, true, this.customBlocks);
         });
         if (Object.keys(blockAttributes).length > 0) {
+            let copyAttributes = {};
             for (const key in blockAttributes) {
-                if (blockAttributes[key] === null) {
-                    delete blockAttributes[key];
+                if (blockAttributes[key] !== null) {
+                    copyAttributes[key] = blockAttributes[key];
                 }
             }
+            blockAttributes = copyAttributes;
             delta.insert('\n', blockAttributes);
         }
         return delta.ops;
@@ -164,15 +166,17 @@ class DefaultHtmlToOperations extends html_to_operation_1.HtmlOperations {
         blockAttributes.header = parseInt(headerLevel.substring(1), 10);
         const nodes = element.childNodes;
         nodes.forEach((node) => {
-            (0, node_processor_1.processNode)(node, attributes, delta, false, this.customBlocks);
+            (0, node_processor_1.processNode)(node, attributes, delta, true, this.customBlocks, ['size']);
         });
         // Ensure a newline is added at the end of the header with the correct attributes
         if (Object.keys(blockAttributes).length > 0) {
+            let copyAttributes = {};
             for (const key in blockAttributes) {
-                if (blockAttributes[key] === null) {
-                    delete blockAttributes[key];
+                if (blockAttributes[key] !== null) {
+                    copyAttributes[key] = blockAttributes[key];
                 }
             }
+            blockAttributes = copyAttributes;
             delta.insert('\n', blockAttributes);
         }
         return delta.ops;

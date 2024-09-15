@@ -14,7 +14,7 @@ const html_utils_1 = require("./html_utils");
  * @param {Delta} delta - The Delta object to push operations into.
  * @param {boolean} [addSpanAttrs=false] - Whether to add attributes from <span> tags.
  */
-function processNode(node, attributes, delta, addSpanAttrs = false, customBlocks = []) {
+function processNode(node, attributes, delta, addSpanAttrs = false, customBlocks = [], removeTheseAttributesFromSpan = []) {
     var _a, _b, _c;
     if (node instanceof node_html_parser_1.TextNode) {
         const validAttributes = {};
@@ -70,11 +70,29 @@ function processNode(node, attributes, delta, addSpanAttrs = false, customBlocks
         // Use custom block definitions if provided
         // Handle <span> tags
         if ((0, html_utils_1.isSpan)(node)) {
-            const spanAttributes = (0, html_utils_1.parseStyleAttribute)(node.getAttribute('style') || '');
+            let spanAttributes = (0, html_utils_1.parseStyleAttribute)(node.getAttribute('style') || '');
             if (addSpanAttrs) {
-                delete newAttributes['align'];
-                delete newAttributes['direction'];
-                delete newAttributes['indent'];
+                let newCopyAttr = {};
+                for (const key in newAttributes) {
+                    if (key === 'align' || key === 'direction' || key === 'indent') {
+                        continue;
+                    }
+                    if (newAttributes[key] !== null && newAttributes[key] !== undefined && removeTheseAttributesFromSpan.indexOf(key) <= -1) {
+                        newCopyAttr[key] = newAttributes[key];
+                    }
+                }
+                if (removeTheseAttributesFromSpan) {
+                    let copyAttributes = {};
+                    for (const key in spanAttributes) {
+                        if (spanAttributes[key] !== null && spanAttributes[key] !== undefined && removeTheseAttributesFromSpan.indexOf(key) <= -1) {
+                            copyAttributes[key] = spanAttributes[key];
+                        }
+                        else if (key === 'align' || key === 'direction' || key === 'indent') {
+                            continue;
+                        }
+                    }
+                    spanAttributes = copyAttributes;
+                }
                 Object.assign(newAttributes, spanAttributes);
             }
         }
