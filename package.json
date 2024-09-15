@@ -1,6 +1,6 @@
 {
   "name": "quill-delta-from-html",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Convert easily HTML inputs content to Quill Js Delta format",
   "main": "dist/quill-delta-from-html.js",
   "types": "dist/quill-delta-from-html.d.ts",

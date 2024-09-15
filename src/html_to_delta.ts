@@ -14,8 +14,8 @@ export class HtmlToDelta {
   private htmlToOp: HtmlOperations;
 
   /** This is a list that must contains only the tag name
-   * of the all HTML Nodes (`<p>`, `<div>` or `<h1>`) that will be
-   * ignored and inserted as plain text
+   * of the all HTML Nodes (something like: [`p`, `div`, `h1`]) that will be
+   * inserted as plain text
    * 
    * # Example
    * Assume that you want to ignore just HTML containers. Then just need
@@ -52,8 +52,8 @@ export class HtmlToDelta {
   private customBlocks: CustomHtmlPart[];
 
   constructor(
-    customBlocks?: CustomHtmlPart[],
-    htmlToOperation?: HtmlOperations,
+    customBlocks?: CustomHtmlPart[] | null,
+    htmlToOperation?: HtmlOperations | null,
     blackNodesList: string[] = [],
   ) {
     this.customBlocks = customBlocks || [];

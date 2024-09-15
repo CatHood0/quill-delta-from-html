@@ -1,11 +1,8 @@
-## 1.0.4
+## 1.0.5
 
-* Correctly add last new line in #3
-
-## 1.0.3
-
-* Fix: `quill-delta-from-html` cannot founded
-* Chore: exposing all named methods on `quill-delta-from-html`
+* Fix: header ignores the attributes from span children
+* Fix: removed unnecessary exceptions when colors or sizes are not supported
+* Feat: added `blackNodesList` into `HtmlToDelta` class to ignore certain nodes
 
 ## 1.0.2
 
