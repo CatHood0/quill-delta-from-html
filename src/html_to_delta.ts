@@ -13,6 +13,23 @@ export class HtmlToDelta {
    **/
   private htmlToOp: HtmlOperations;
 
+  /** This is a list that must contains only the tag name
+   * of the all HTML Nodes (`<p>`, `<div>` or `<h1>`) that will be
+   * ignored and inserted as plain text
+   * 
+   * # Example
+   * Assume that you want to ignore just HTML containers. Then just need
+   * to do something like this:
+   * 
+   * ```typescript
+   * let containerBlackList: string[] = ['div', 'section', 'article'];
+   * 
+   * let converter: HtmlToDelta = new HtmlToDelta(null, null, containerBlackList);
+   * let delta = converter.convert(<your_html>);
+   * ```
+   **/ 
+  private blackNodesList: string[];
+
   /**
    * List of custom HTML parts to handle non-common HTML tags.
    *
@@ -31,17 +48,19 @@ export class HtmlToDelta {
    *     })
    *   ]);
    * ```
-   */
+   **/
   private customBlocks: CustomHtmlPart[];
 
   constructor(
     customBlocks?: CustomHtmlPart[],
     htmlToOperation?: HtmlOperations,
+    blackNodesList: string[] = [],
   ) {
     this.customBlocks = customBlocks || [];
     this.htmlToOp = htmlToOperation || new DefaultHtmlToOperations();
     //automatically set custom block
     this.htmlToOp.setCustomBlocks(this.customBlocks);
+    this.blackNodesList = blackNodesList;
   }
   /**
    * Converts an HTML string into Delta operations.
@@ -93,6 +112,10 @@ export class HtmlToDelta {
           if (continueLoop) {
             continue;
           }
+        }
+        if(this.blackNodesList.indexOf(node.localName) >= 0){
+          delta.push({ insert: node.text });
+          continue;
         }
         const operations: Op[] = this.htmlToOp.resolveCurrentElement(node, 0);
         operations.forEach((op) => {
