@@ -32,12 +32,16 @@ export function parseStyleAttribute(style: string): AttributeMap {
           attributes['align'] = value;
           break;
         case 'color':
-          const color: string = validateAndGetColor(value);
-          attributes['color'] = color;
+          const color: string | null = validateAndGetColor(value);
+          if(color != null){
+            attributes['color'] = color;
+          }
           break;
         case 'background-color':
-          const bgColor: string = validateAndGetColor(value);
-          attributes['background'] = bgColor;
+          const bgColor: string | null = validateAndGetColor(value);
+          if(bgColor != null){
+            attributes['background'] = bgColor;
+          }
           break;
         case 'padding-left':
         case 'padding-right':
@@ -58,7 +62,8 @@ export function parseStyleAttribute(style: string): AttributeMap {
             sizeToPass = 'huge';
           } else {
             try {
-              const size = parseToPx(value);
+              const size: number | null = parseToPx(value);
+              if(size == null) break;
               if (size <= 10) {
                 sizeToPass = 'small';
               } else {

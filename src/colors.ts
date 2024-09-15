@@ -28,7 +28,7 @@ export function colorToHex(color: string) {
   } else if (color.startsWith('hsla(')) {
     return hslaToHex(color);
   } else {
-    throw new Error(`color format not supported: ${color}`);
+    return null;
   }
 }
 

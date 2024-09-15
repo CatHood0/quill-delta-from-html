@@ -45,7 +45,7 @@ export  function parseToPx(
   value: string,
   fontSizeEmMultiplier: number = 16.0,
   rootFontSizeRemMultiplier: number = 16.0,
-): number {
+): number | null {
   // Extract the unit froue string.
   const unit = value.replace(/[0-9.]/g, '');
 
@@ -71,6 +71,6 @@ export  function parseToPx(
     case 'rem':
       return number * rootFontSizeRemMultiplier;
     default:
-      throw new Error(`Unit not supported: ${unit}`);
+      return null;
   }
 }
