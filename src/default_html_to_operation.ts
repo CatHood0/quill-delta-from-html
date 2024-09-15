@@ -79,11 +79,13 @@ export class DefaultHtmlToOperations extends HtmlOperations {
     });
 
     if (Object.keys(blockAttributes).length > 0) {
+      let copyAttributes: AttributeMap = {};
       for (const key in blockAttributes) {
-        if (blockAttributes[key] === null) {
-          delete blockAttributes[key];
+        if (blockAttributes[key] !== null) {
+          copyAttributes[key] = blockAttributes[key];
         }
       }
+      blockAttributes = copyAttributes;
       delta.insert('\n', blockAttributes);
     }
 
