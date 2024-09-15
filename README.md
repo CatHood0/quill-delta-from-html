@@ -61,7 +61,7 @@ This is a package that converts **HTML** input into Quill **Delta** format, whic
 import { HtmlToDelta } from 'quill-delta-from-html';
 
 const htmlContent: string = '<p>Hello, <b>world</b>!</p>';
-const delta = new HtmlToDelta().convert(htmlContent);
+const delta = new HtmlToDelta(<your_custom_blocks>, <YourHtmlToOperationsImpl>, <your_black_nodes_list>).convert(htmlContent);
 
 /*
    { "insert": "hello, " },
