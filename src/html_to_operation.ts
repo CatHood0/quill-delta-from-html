@@ -37,7 +37,11 @@ export abstract class HtmlOperations {
    * A list of Delta operations corresponding to the HTML element.
    *
    **/
-  resolveCurrentElement(element: HTMLElement, indentLevel: number = 0): Op[] {
+  resolveCurrentElement(
+    element: HTMLElement,
+    indentLevel: number = 0,
+    nextIsBlock: Boolean = false,
+  ): Op[] {
     let ops: Op[] = [];
     if (!element.tagName) {
       ops.push({ insert: element.text || '' });
@@ -93,6 +97,8 @@ export abstract class HtmlOperations {
     if (isDivBlock(element)) {
       ops.push(...this.divToOp(element));
     }
+
+    if (nextIsBlock) ops.push({ insert: '\n' });
     return ops;
   }
 

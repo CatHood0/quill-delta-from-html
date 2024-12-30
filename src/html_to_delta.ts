@@ -3,6 +3,7 @@ import { parse, HTMLElement, TextNode } from 'node-html-parser';
 import { DefaultHtmlToOperations } from './default_html_to_operation';
 import { HtmlOperations } from './html_to_operation';
 import { CustomHtmlPart } from './custom_html_part';
+import { isBlock } from './html_utils';
 
 /**
  * Default converter for html to Delta
@@ -16,18 +17,18 @@ export class HtmlToDelta {
   /** This is a list that must contains only the tag name
    * of the all HTML Nodes (something like: [`p`, `div`, `h1`]) that will be
    * inserted as plain text
-   * 
+   *
    * # Example
    * Assume that you want to ignore just HTML containers. Then just need
    * to do something like this:
-   * 
+   *
    * ```typescript
    * let containerBlackList: string[] = ['div', 'section', 'article'];
-   * 
+   *
    * let converter: HtmlToDelta = new HtmlToDelta(null, null, containerBlackList);
    * let delta = converter.convert(<your_html>);
    * ```
-   **/ 
+   **/
   private blackNodesList: string[];
 
   /**
@@ -76,15 +77,22 @@ export class HtmlToDelta {
    *
    **/
   convert(htmlText: string): Delta {
+    const parsedHtmlText = htmlText.split('\n').map((e) => e.trimStart()).join('');
     const delta = new Delta();
-    const document = parse(htmlText);
+    const document = parse(parsedHtmlText);
     const nodesToProcess =
       document.querySelector('body')?.childNodes ||
       document.querySelector('html')?.childNodes ||
       document.childNodes;
-    for (let index: number = 0; index < nodesToProcess.length; index++) {
+    for (let index = 0; index < nodesToProcess.length; index++) {
       const node = nodesToProcess.at(index);
-
+      let nextNode = nodesToProcess.at(index + 1) ?? null;
+      let nextIsBlock =
+        nextNode === null || nextNode === undefined
+          ? false
+          : nextNode instanceof HTMLElement
+          ? isBlock((nextNode as HTMLElement).localName)
+          : false;
       if (node instanceof HTMLElement) {
         //first just verify if the customBlocks aren't empty and then store on them to
         //validate if one of them make match with the current Node
@@ -113,25 +121,36 @@ export class HtmlToDelta {
             continue;
           }
         }
-        if(this.blackNodesList.indexOf(node.localName) >= 0){
+        if (this.blackNodesList.indexOf(node.localName) >= 0) {
           delta.push({ insert: node.text });
+          if (nextIsBlock) delta.insert('\n');
           continue;
         }
-        const operations: Op[] = this.htmlToOp.resolveCurrentElement(node, 0);
+        const operations: Op[] = this.htmlToOp.resolveCurrentElement(
+          node,
+          0,
+          nextIsBlock,
+        );
         operations.forEach((op) => {
           delta.push(op);
         });
       }
       if (node instanceof TextNode) {
         delta.insert((node as TextNode).text);
+        if (nextIsBlock) delta.push({insert: '\n'});
       }
     }
 
     const operation: Op = delta.ops[delta.ops.length - 1];
-    const hasAttributes = operation.attributes !== null && operation.attributes !== undefined;
+    const hasAttributes =
+      operation.attributes !== null && operation.attributes !== undefined;
     const lastData = operation.insert;
 
-    if (typeof lastData !== 'string' || !lastData.endsWith('\n') || hasAttributes) {
+    if (
+      typeof lastData !== 'string' ||
+      !lastData.endsWith('\n') ||
+      hasAttributes
+    ) {
       delta.insert('\n');
     }
     return delta;

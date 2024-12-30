@@ -30,7 +30,7 @@ class HtmlOperations {
      * A list of Delta operations corresponding to the HTML element.
      *
      **/
-    resolveCurrentElement(element, indentLevel = 0) {
+    resolveCurrentElement(element, indentLevel = 0, nextIsBlock = false) {
         let ops = [];
         if (!element.tagName) {
             ops.push({ insert: element.text || '' });
@@ -85,6 +85,8 @@ class HtmlOperations {
         if ((0, html_utils_1.isDivBlock)(element)) {
             ops.push(...this.divToOp(element));
         }
+        if (nextIsBlock)
+            ops.push({ insert: '\n' });
         return ops;
     }
     setCustomBlocks(customBlocks) {

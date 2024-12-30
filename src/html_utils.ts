@@ -143,7 +143,6 @@ export function isInline(tagName: string): Boolean {
 
 export function isBlock(tagName: string): Boolean {
   return [
-    'p',
     'h1',
     'h2',
     'h3',

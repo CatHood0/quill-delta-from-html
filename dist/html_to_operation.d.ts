@@ -21,7 +21,7 @@ export declare abstract class HtmlOperations {
      * A list of Delta operations corresponding to the HTML element.
      *
      **/
-    resolveCurrentElement(element: HTMLElement, indentLevel?: number): Op[];
+    resolveCurrentElement(element: HTMLElement, indentLevel?: number, nextIsBlock?: Boolean): Op[];
     abstract paragraphToOp(element: HTMLElement): Op[];
     abstract spanToOp(element: HTMLElement): Op[];
     abstract headerToOp(element: HTMLElement): Op[];

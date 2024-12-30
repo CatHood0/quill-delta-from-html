@@ -1,3 +1,7 @@
+## 1.0.6
+
+* Fix: Incorrect paragraph breaks when next node is treated as a block
+
 ## 1.0.5
 
 * Fix: header ignores the attributes from span children

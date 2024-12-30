@@ -167,7 +167,6 @@ function isInline(tagName) {
 }
 function isBlock(tagName) {
     return [
-        'p',
         'h1',
         'h2',
         'h3',
