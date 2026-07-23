@@ -6,12 +6,12 @@ import { parseToPx } from './fontsize_parser';
 
 export function getInlineAttributes(element: HTMLElement): AttributeMap {
   const attributes: AttributeMap = {};
-  if (element.tagName === 'strong') attributes.bold = true;
-  if (element.tagName === 'em') attributes.italic = true;
-  if (element.tagName === 'u') attributes.underline = true;
-  if (element.tagName === 's') attributes.strike = true;
-  if (element.tagName === 'sub') attributes.script = 'sub';
-  if (element.tagName === 'sup') attributes.script = 'super';
+  if (element.localName === 'strong') attributes.bold = true;
+  if (element.localName === 'em') attributes.italic = true;
+  if (element.localName === 'u') attributes.underline = true;
+  if (element.localName === 's') attributes.strike = true;
+  if (element.localName === 'sub') attributes.script = 'sub';
+  if (element.localName === 'sup') attributes.script = 'super';
   return attributes;
 }
 

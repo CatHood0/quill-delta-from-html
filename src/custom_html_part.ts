@@ -15,7 +15,7 @@ export interface CustomHtmlPart {
    * ```typescript
    * class MyCustomBlock implements CustomHtmlPart {
    *   matches(element: DomElement): boolean {
-   *     return element.tagName === 'div' && element.attribs.class === 'my-custom-class';
+   *     return element.localName === 'div' && element.attribs.class === 'my-custom-class';
    *   }
    * }
    * ```

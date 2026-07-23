@@ -1,4 +1,4 @@
-import { HTMLElement } from 'node-html-parser';
+import { HTMLElement, Node } from 'node-html-parser';
 import Delta, { Op } from 'quill-delta';
 import { CustomHtmlPart } from './custom_html_part';
 import {
@@ -43,7 +43,7 @@ export abstract class HtmlOperations {
     nextIsBlock: Boolean = false,
   ): Op[] {
     let ops: Op[] = [];
-    if (!element.tagName) {
+    if (!element.localName) {
       ops.push({ insert: element.text || '' });
       return ops;
     }
@@ -52,12 +52,12 @@ export abstract class HtmlOperations {
     // the current element could be into a <li> then it's node can be
     // a <strong> or a <em>, or even a <span> then we first need to verify
     // if a inline an store into it to parse the attributes as we need
-    if (isInline(element.tagName)) {
+    if (isInline(element.localName)) {
       const delta = new Delta();
       const attributes = getInlineAttributes(element);
       for (let index = 0; index < element.childNodes.length; index++) {
         const node = element.childNodes.at(index);
-        if (node instanceof HTMLElement) {
+        if (node instanceof Node) {
           processNode(node, attributes, delta, false, this.customBlocks);
         }
       }
