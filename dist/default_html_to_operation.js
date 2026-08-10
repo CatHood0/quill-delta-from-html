@@ -66,16 +66,13 @@ class DefaultHtmlToOperations extends html_to_operation_1.HtmlOperations {
         nodes.forEach((node) => {
             (0, node_processor_1.processNode)(node, inlineAttributes, delta, true, this.customBlocks);
         });
-        if (Object.keys(blockAttributes).length > 0) {
-            let copyAttributes = {};
-            for (const key in blockAttributes) {
-                if (blockAttributes[key] !== null) {
-                    copyAttributes[key] = blockAttributes[key];
-                }
+        let copyAttributes = {};
+        for (const key in blockAttributes) {
+            if (blockAttributes[key] !== null) {
+                copyAttributes[key] = blockAttributes[key];
             }
-            blockAttributes = copyAttributes;
-            delta.insert('\n', blockAttributes);
         }
+        delta.insert('\n', copyAttributes);
         return delta.ops;
     }
     spanToOp(element) {
