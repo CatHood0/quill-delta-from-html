@@ -162,7 +162,7 @@ export function processNode(
 
     // Recursively process child nodes
     for (let child of node.childNodes) {
-      processNode(child, newAttributes, delta, addSpanAttrs);
+      processNode(child, newAttributes, delta, addSpanAttrs, customBlocks);
     }
   }
 }
